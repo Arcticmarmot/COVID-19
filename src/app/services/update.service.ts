@@ -1,11 +1,26 @@
 import { Injectable } from '@angular/core';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Observable} from 'rxjs';
 
+const API_H5 = 'g2/getOnsInfo?name=disease_h5';
+const API_OTHER = 'g2/getOnsInfo?name=disease_other';
+const httpOptions = {
+  headers: new HttpHeaders().set('Access-Control-Allow-Origin', '*')
+}
 @Injectable({
   providedIn: 'root'
 })
 export class UpdateService {
 
-  constructor() { }
+  constructor(private http: HttpClient ) {
+  }
+
+  update_h5(): Observable<any> {
+    console.log(httpOptions);
+    return this.http.get(API_H5);
+  }
+  update_other(): Observable<any> {
+    return this.http.get(API_OTHER);
+  }
+
 }
-//https://view.inews.qq.com/g2/getOnsInfo?name=disease_other&callback=jQuery34103076933412720082_1582704893503&_=1582704893504
-//https://view.inews.qq.com/g2/getOnsInfo?name=disease_h5&callback=jQuery34103076933412720082_1582704893501&_=1582704893502
