@@ -4,12 +4,14 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import {HttpClientModule} from '@angular/common/http';
 import {NgxEchartsModule} from 'ngx-echarts';
+import {StatisticModule} from './statistic/statistic.module';
 
 @NgModule({
   declarations: [
     AppComponent
   ],
   imports: [
+    StatisticModule,
     HttpClientModule,
     NgxEchartsModule,
     BrowserModule
