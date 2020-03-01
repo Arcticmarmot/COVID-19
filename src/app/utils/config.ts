@@ -1,9 +1,9 @@
 import { graphic } from 'echarts/lib/echarts';
-export function generateGeoBarConfig(queryData) {
+export function generateGeoBarConfig(switchMap, queryData) {
   return {
     backgroundColor: '#cdcfd5',
     geo3D: {
-      map: 'world',
+      map: switchMap,
       shading: 'lambert',
       light: {
         main: {
@@ -64,13 +64,14 @@ export function generateGeoBarConfig(queryData) {
       regionHeight: 2
     },
     visualMap: {
-      max: 12,
+      max: 11,
       calculable: true,
       realtime: false,
       inRange: {
-        color: ['#313695', '#4575b4', '#74add1',
-          '#abd9e9', '#e0f3f8', '#ffffbf', '#fee090',
-          '#fdae61', '#f46d43', '#d73027', '#a50026']
+        color: [
+          '#313695', '#4575b4', '#74add1',
+          //'#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61',
+          '#f46d43', '#d73027', '#a50026']
       },
       outOfRange: {
         colorAlpha: 0

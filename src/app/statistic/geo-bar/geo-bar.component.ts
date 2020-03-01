@@ -12,16 +12,15 @@ import {generateGeoBarConfig} from '../../utils/config';
 export class GeoBarComponent implements OnInit, OnChanges {
   options;
   @Input() data;
+  @Input() switch;
   constructor() {
   }
   ngOnInit() {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.data) {
-      if (this.data) {
-        this.options = generateGeoBarConfig(this.data);
-      }
+    if (changes.switch || this.data) {
+      this.options = generateGeoBarConfig(this.switch, this.data);
     }
   }
 
