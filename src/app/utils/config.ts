@@ -61,7 +61,7 @@ export function generateGeoBarConfig(switchMap, queryData) {
       },
       itemStyle: {
       },
-      regionHeight: 2
+      regionHeight: 1
     },
     visualMap: {
       max: 11,
@@ -69,9 +69,9 @@ export function generateGeoBarConfig(switchMap, queryData) {
       realtime: false,
       inRange: {
         color: [
-          '#313695', '#4575b4', '#74add1',
-          //'#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61',
-          '#f46d43', '#d73027', '#a50026']
+          '#313695', '#4575b4',
+          //'#74add1','#abd9e9', '#e0f3f8', '#ffffbf','#fee090',
+          '#fdae61', '#f46d43', '#d73027', '#a50026']
       },
       outOfRange: {
         colorAlpha: 0
@@ -82,8 +82,8 @@ export function generateGeoBarConfig(switchMap, queryData) {
       coordinateSystem: 'geo3D',
       shading: 'lambert',
       data: queryData,
-      barSize: 0.1,
-      minHeight: 0.2,
+      barSize: 0.3,
+      minHeight: 0.5,
       silent: true,
       animation: true,
       itemStyle: {

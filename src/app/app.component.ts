@@ -6,22 +6,23 @@ import {trans2GeoBarData} from './utils/trans-data';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.less']
 })
   export class AppComponent {
-  geoBarSwitch = 'china';
+  geoBarSwitch = 'world';
   geoBarData;
   constructor(private updateService: UpdateService) {
     this.updateService.update_h5().subscribe(
       data => {
         const parseData = JSON.parse(data.data);
+        console.log(parseData);
         this.geoBarData = trans2GeoBarData(this.geoBarSwitch, parseData);
       }
     );
-    this.updateService.update_other().subscribe(
-      data => {
-        console.log(JSON.parse(data.data));
-      }
-    );
+    // this.updateService.update_other().subscribe(
+    //   data => {
+    //     console.log(JSON.parse(data.data));
+    //   }
+    // );
   }
 }

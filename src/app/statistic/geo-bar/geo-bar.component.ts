@@ -7,7 +7,7 @@ import {generateGeoBarConfig} from '../../utils/config';
 @Component({
   selector: 'app-geo-bar',
   templateUrl: './geo-bar.component.html',
-  styleUrls: ['./geo-bar.component.css']
+  styleUrls: ['./geo-bar.component.less']
 })
 export class GeoBarComponent implements OnInit, OnChanges {
   options;

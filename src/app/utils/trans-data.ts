@@ -1,4 +1,5 @@
 import {WORLD, CHINA} from './coordinate';
+
 export function trans2GeoBarData(switchMap, data) {
   switch (switchMap) {
     case 'china':
@@ -8,14 +9,12 @@ export function trans2GeoBarData(switchMap, data) {
   }
 }
 function trans2GeoBarWorldData(data) {
-  console.log(data);
   const geoBarData = [];
   data.areaTree.forEach(area => {
     if (WORLD[area.name] ) {
-      geoBarData.push([WORLD[area.name][0], WORLD[area.name][1], Math.log(area.total.confirm)]);
+      geoBarData.push([WORLD[area.name][0], WORLD[area.name][1], Math.log(area.total.confirm + 5)]);
     }
   });
-  console.log(geoBarData);
   return geoBarData;
 }
 function trans2GeoBarChinaData(data) {
@@ -28,12 +27,9 @@ function trans2GeoBarChinaData(data) {
         .replace('区', '')
         .replace('市', '');
       if (CHINA[name]) {
-        geoBarData.push([CHINA[name][0], CHINA[name][1], Math.log(area.total.confirm + 1)]);
-      } else {
-        //console.log(name);
+        geoBarData.push([CHINA[name][0], CHINA[name][1], Math.log(area.total.confirm + 5)]);
       }
     });
   });
-  console.log(geoBarData);
   return geoBarData;
 }
