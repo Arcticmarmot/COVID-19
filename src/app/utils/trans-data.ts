@@ -1,5 +1,36 @@
 import {WORLD, CHINA} from './coordinate';
+const transChinese = {
+  confirm: '累计确诊',
+  heal: '治愈',
+  dead: '死亡',
+  nowConfirm: '现存确诊',
+  suspect: '现存疑似',
+  nowSevere: '现存重症'
+};
+const transColor = {
+  confirm: 'deepskyblue',
+  heal: 'darkseagreen',
+  dead: 'black',
+  nowConfirm: 'oranged',
+  suspect: 'lightcoral',
+  nowSevere: 'crimson'
+};
 
+export function trans2RelatedNumData(data) {
+  const result = [];
+  // tslint:disable-next-line:forin
+  for (const i in data.chinaTotal) {
+    result.push([
+      transChinese[i],
+      data.chinaTotal[i], data.chinaAdd[i] > 0 ? '+' + data.chinaAdd[i] : data.chinaAdd[i],
+      transColor[i]
+    ]);
+  }
+  return {
+    lastUpdateTime: data.lastUpdateTime,
+    nums: result
+  };
+}
 export function trans2GeoBarData(switchMap, data) {
   switch (switchMap) {
     case 'china':

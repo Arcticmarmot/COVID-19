@@ -5,8 +5,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {NgxEchartsModule} from 'ngx-echarts';
 import {StatisticModule} from './statistic/statistic.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {MatButtonModule} from '@angular/material/button';
-
+import {MatListModule} from '@angular/material/list';
 
 @NgModule({
   declarations: [
@@ -16,9 +15,9 @@ import {MatButtonModule} from '@angular/material/button';
     StatisticModule,
     HttpClientModule,
     NgxEchartsModule,
-    MatButtonModule,
     BrowserModule,
     BrowserAnimationsModule,
+    MatListModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
