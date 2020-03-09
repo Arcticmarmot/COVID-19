@@ -6,13 +6,13 @@
   <div class="list">
     <div class="item" *ngFor="let num of data.nums">
       <div class="add">
-        较昨日: {{num[2]}}
+        较昨日 : {{num[2]}}
       </div>
       <div class="now" [ngStyle]="{'color': num[3]}">
         <strong>{{num[1]}}</strong>
       </div>
       <div class="item-name">
-        <strong style="color: ">{{num[0]}}</strong>
+        <strong>{{num[0]}}</strong>
       </div>
     </div>
   </div>

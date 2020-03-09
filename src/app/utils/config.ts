@@ -1,6 +1,20 @@
 import { graphic } from 'echarts/lib/echarts';
 export function generateGeoBarConfig(switchMap, queryData) {
   return {
+    title: {
+      text: (switchMap === 'china' ? '中国' : '世界') + '疫情累计确诊病例柱状图',
+      left: 'right'
+    },
+    toolbox: {
+      show: true,
+      left: 'left',
+      top: 'top',
+      feature: {
+        dataView: {readOnly: false},
+        restore: {},
+        saveAsImage: {}
+      }
+    },
     backgroundColor: '#cdcfd5',
     geo3D: {
       map: switchMap,
@@ -64,14 +78,14 @@ export function generateGeoBarConfig(switchMap, queryData) {
       regionHeight: 1
     },
     visualMap: {
-      max: 11,
+      max: 10,
       calculable: true,
       realtime: false,
+      text: ['high', 'low'],
       inRange: {
         color: [
-          '#313695', '#4575b4',
-          //'#74add1','#abd9e9', '#e0f3f8', '#ffffbf','#fee090',
-          '#fdae61', '#f46d43', '#d73027', '#a50026']
+          '#313695', '#4575b4', '#fdae61',
+          '#f46d43', '#d73027', '#a50026']
       },
       outOfRange: {
         colorAlpha: 0
@@ -91,5 +105,61 @@ export function generateGeoBarConfig(switchMap, queryData) {
         opacity: 0.8
       }
     }]
+  };
+}
+export function generateGeoScatterConfig(switchMap, queryData) {
+  return {
+    title: {
+      text: (switchMap === 'china' ? '中国' : '世界') + '疫情累计确诊病例密度图',
+      left: 'right'
+    },
+    tooltip: {
+      trigger: 'item',
+      showDelay: 0,
+      transitionDuration: 0.2,
+    },
+    visualMap: {
+      type: 'piecewise',
+      left: 'right',
+      pieces: [
+        {min: 10000}, // 不指定 max，表示 max 为无限大（Infinity）。
+        {min: 1000, max: 9999},
+        {min: 100, max: 999},
+        {min: 10, max: 99},
+        {min: 1, max: 9},
+        {max: 1}     // 不指定 min，表示 min 为无限大（-Infinity）。
+      ],
+      inRange: {
+        color: ['#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027']
+      },
+      calculable: true
+    },
+    toolbox: {
+      show: true,
+      left: 'left',
+      top: 'top',
+      feature: {
+        dataView: {readOnly: false},
+        restore: {},
+        saveAsImage: {}
+      }
+    },
+    series: [
+      {
+        type: 'map',
+        roam: true,
+        map: switchMap,
+        emphasis: {
+          label: {
+            show: true
+          }
+        },
+        // 文本位置修正
+        textFixed: {
+          Alaska: [20, -20]
+        },
+        data: queryData
+      }
+    ]
   };
 }

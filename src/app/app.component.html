@@ -9,9 +9,15 @@
       <div id="related-num">
         <app-related-num [data]="relatedNumData"></app-related-num>
       </div>
-      <div id="geo-bar">
-        <app-geo-bar  [switch]="geoBarSwitch" [data]="geoBarData"></app-geo-bar>
+      <div id="geo">
+        <div id="geo-bar" *ngIf="geoSwitch === '3d'">
+          <app-geo-bar  [switch]="geoBarSwitch" [data]="geoBarData"></app-geo-bar>
+        </div>
+        <div id="geo-scatter" *ngIf="geoSwitch === '2d'">
+          <app-geo-scatter [switch]="geoScatterSwitch" [data]="geoScatterData"></app-geo-scatter>
+        </div>
       </div>
+
     </div>
     <div class="right">
     </div>
