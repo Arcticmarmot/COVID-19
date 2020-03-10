@@ -10,6 +10,15 @@
         <app-related-num [data]="relatedNumData"></app-related-num>
       </div>
       <div id="geo">
+        <div class="control">
+          <div class="area-control">
+            <button mat-stroked-button (click)="geoWorldSwitchChange()">World</button>
+            <button mat-stroked-button (click)="geoChinaSwitchChange()">China</button>
+          </div>
+          <div class="dimension-control">
+            <mat-slide-toggle (change)="geoSwitchChange($event)">3D</mat-slide-toggle>
+          </div>
+        </div>
         <div id="geo-bar" *ngIf="geoSwitch === '3d'">
           <app-geo-bar  [switch]="geoBarSwitch" [data]="geoBarData"></app-geo-bar>
         </div>

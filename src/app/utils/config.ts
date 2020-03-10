@@ -130,7 +130,7 @@ export function generateGeoScatterConfig(switchMap, queryData) {
         {max: 1}     // 不指定 min，表示 min 为无限大（-Infinity）。
       ],
       inRange: {
-        color: ['#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027']
+        color: ['#e0f3f8', '#abd9e9', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027']
       },
       calculable: true
     },
