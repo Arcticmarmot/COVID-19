@@ -1,5 +1,6 @@
 import {WORLD, CHINA} from './coordinate';
 import {COUNTRY_NAME} from './translate';
+import {count} from 'rxjs/operators';
 const transChinese = {
   confirm: '累计确诊',
   heal: '治愈',
@@ -18,6 +19,26 @@ const transColor = {
   nowSevere: 'crimson',
   importedCase: 'cornflowerblue'
 };
+export function trans2BarChartData(switchArea, data) {
+  const result = {xAxis: [], yAxisNowComfirm: [], yAxisHeal: [], yAxisDead: []};
+  if (switchArea === 'world') {
+    data.foreignList.forEach(country => {
+      result.xAxis.push(country.name);
+      result.yAxisNowComfirm.push(country.confirm - country.heal);
+      result.yAxisHeal.push(country.heal);
+      result.yAxisDead.push(country.dead);
+    });
+  } else if (switchArea === 'china') {
+    data.areaTree[0].children.forEach(province => {
+      result.xAxis.push(province.name);
+      result.yAxisNowComfirm.push(province.total.confirm - province.total.heal);
+      result.yAxisHeal.push(province.total.heal);
+      result.yAxisDead.push(province.total.dead);
+    });
+  }
+  console.log(result, 'eee');
+  return result;
+}
 export function trans2LineChartData(switchArea, data) {
   const result = {xAxis: [], yAxis: []};
   if (switchArea === 'world') {

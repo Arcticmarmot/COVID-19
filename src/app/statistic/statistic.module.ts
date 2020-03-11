@@ -14,7 +14,8 @@ import { BarChartComponent } from './bar-chart/bar-chart.component';
     GeoBarComponent,
     RelatedNumComponent,
     GeoScatterComponent,
-    LineChartComponent
+    LineChartComponent,
+    BarChartComponent
   ],
   imports: [
     CommonModule,
