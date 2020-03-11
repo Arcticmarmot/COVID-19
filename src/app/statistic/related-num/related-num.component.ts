@@ -10,7 +10,6 @@ export class RelatedNumComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    console.log('ds', this.data);
   }
 
 }

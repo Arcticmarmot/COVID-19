@@ -15,7 +15,7 @@ export class GeoScatterComponent implements OnInit, OnChanges {
   ngOnInit(): void {
   }
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.switch || this.data) {
+    if (this.data && (changes.switch || changes.data)) {
       this.options = generateGeoScatterConfig(this.switch, this.data);
     }
   }

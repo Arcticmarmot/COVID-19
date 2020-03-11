@@ -1,7 +1,8 @@
 import {Component} from '@angular/core';
 import {UpdateService} from './services/update.service';
-import {trans2GeoBarData, trans2GeoScatterData, trans2RelatedNumData} from './utils/trans-data';
+import {trans2GeoBarData, trans2GeoScatterData, trans2LineChartData, trans2RelatedNumData} from './utils/trans-data';
 import {MatSlideToggleChange} from '@angular/material/slide-toggle';
+import {concatObject} from './utils/utils';
 
 
 @Component({
@@ -11,22 +12,24 @@ import {MatSlideToggleChange} from '@angular/material/slide-toggle';
 })
   export class AppComponent {
   geoSwitch = '2d';
+  switch = 'world';
   geoBarSwitch = 'world';
   geoBarData;
   geoScatterSwitch = 'world';
   geoScatterData;
+  lineChartData;
   relatedNumData = {};
   parseData = {};
+  times = 0;
   constructor(private updateService: UpdateService) {
-    this.updateService.update_h5().subscribe(
+    this.updateService.update().subscribe(
       data => {
-        this.parseData = JSON.parse(data.data);
-        this.update();
-      }
-    );
-    this.updateService.update_other().subscribe(
-      data => {
-        console.log('history', JSON.parse(data.data));
+        concatObject(this.parseData, JSON.parse(data.data));
+        console.log(this.parseData);
+        this.times++;
+        if (this.times === 2) {
+          this.update();
+        }
       }
     );
   }
@@ -36,7 +39,8 @@ import {MatSlideToggleChange} from '@angular/material/slide-toggle';
     } else {
       this.geoScatterData = trans2GeoScatterData(this.geoScatterSwitch, this.parseData);
     }
-    this.relatedNumData = trans2RelatedNumData(this.parseData);
+    this.relatedNumData = trans2RelatedNumData(this.switch, this.parseData);
+    this.lineChartData = trans2LineChartData(this.switch, this.parseData);
   }
 
   geoSwitchChange($event: MatSlideToggleChange) {
@@ -49,7 +53,8 @@ import {MatSlideToggleChange} from '@angular/material/slide-toggle';
   }
 
   geoWorldSwitchChange() {
-    if (this.geoScatterSwitch !== 'world' || this.geoBarSwitch !== 'world') {
+    if (this.switch !== 'world') {
+      this.switch = 'world';
       this.geoScatterSwitch = 'world';
       this.geoBarSwitch = 'world';
       this.update();
@@ -57,7 +62,8 @@ import {MatSlideToggleChange} from '@angular/material/slide-toggle';
   }
 
   geoChinaSwitchChange() {
-    if (this.geoScatterSwitch !== 'china' || this.geoBarSwitch !== 'china') {
+    if (this.switch !== 'china') {
+      this.switch = 'china';
       this.geoScatterSwitch = 'china';
       this.geoBarSwitch = 'china';
       this.update();

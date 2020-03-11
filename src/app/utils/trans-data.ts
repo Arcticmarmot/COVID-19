@@ -18,16 +18,54 @@ const transColor = {
   nowSevere: 'crimson',
   importedCase: 'cornflowerblue'
 };
-
-export function trans2RelatedNumData(data) {
+export function trans2LineChartData(switchArea, data) {
+  const result = {xAxis: [], yAxis: []};
+  if (switchArea === 'world') {
+    data.globalDailyHistory.forEach(day => {
+      result.xAxis.push(day.date);
+      result.yAxis.push(day.all.newAddConfirm);
+    });
+  } else if (switchArea === 'china') {
+    data.dailyNewAddHistory.forEach(day => {
+      result.xAxis.push(day.date);
+      result.yAxis.push(day.country);
+    });
+  }
+  console.log(result);
+  return result;
+}
+export function trans2RelatedNumData(switchArea, data) {
   const result = [];
-  // tslint:disable-next-line:forin
-  for (const i in data.chinaTotal) {
-    result.push([
-      transChinese[i],
-      data.chinaTotal[i], data.chinaAdd[i] > 0 ? '+' + data.chinaAdd[i] : data.chinaAdd[i],
-      transColor[i]
-    ]);
+  if (switchArea === 'china') {
+    // tslint:disable-next-line:forin
+    for (const i in data.chinaTotal) {
+      result.push([
+        transChinese[i],
+        data.chinaTotal[i],
+        data.chinaAdd[i] > 0 ? '+' + data.chinaAdd[i] : data.chinaAdd[i],
+        transColor[i]
+      ]);
+    }
+  } else if (switchArea === 'world') {
+    // nowConfirm: 32779
+    // confirm: 38448
+    // heal: 4536
+    // dead: 1133
+    // nowConfirmAdd: 2303
+    // confirmAdd: 2783
+    // healAdd: 324
+    // deadAdd: 156
+    // tslint:disable-next-line:forin
+    for (const i in data.globalStatis) {
+      if (transChinese[i]) {
+        result.push([
+          transChinese[i],
+          data.globalStatis[i],
+          data.globalStatis[i + 'Add'] > 0 ? '+' + data.globalStatis[i + 'Add'] : data.globalStatis[i + 'Add'],
+          transColor[i]
+        ]);
+      }
+    }
   }
   return {
     lastUpdateTime: data.lastUpdateTime,
@@ -46,19 +84,19 @@ export function trans2GeoScatterData(switchMap, data) {
   function trans2GeoScatterWorldData(subData: any) {
     const geoScatterData = [];
     let jp = 0;
-    subData.areaTree.forEach(country => {
+    subData.foreignList.forEach(country => {
       if (COUNTRY_NAME[country.name]) {
         if (COUNTRY_NAME[country.name] === 'Japen') {
-          jp += country.total.confirm;
+          jp += country.confirm;
           geoScatterData.push({name: COUNTRY_NAME[country.name], value: jp});
         } else {
-          geoScatterData.push({name: COUNTRY_NAME[country.name], value: country.total.confirm});
+          geoScatterData.push({name: COUNTRY_NAME[country.name], value: country.confirm});
         }
       } else {
         console.log(country.name);
       }
     });
-    console.log(geoScatterData);
+    geoScatterData.push({name: 'China', value: subData.chinaTotal.confirm})
     return geoScatterData;
   }
 
@@ -72,11 +110,12 @@ export function trans2GeoScatterData(switchMap, data) {
 export function trans2GeoBarData(switchMap, data) {
   function trans2GeoBarWorldData(subData) {
     const geoBarData = [];
-    subData.areaTree.forEach(area => {
+    subData.foreignList.forEach(area => {
       if (WORLD[area.name] ) {
-        geoBarData.push([WORLD[area.name][0], WORLD[area.name][1], Math.log(area.total.confirm + 5)]);
+        geoBarData.push([WORLD[area.name][0], WORLD[area.name][1], Math.log(area.confirm + 5)]);
       }
     });
+    geoBarData.push([WORLD['中国'][0], WORLD['中国'][1], Math.log(subData.chinaTotal.confirm + 5)])
     return geoBarData;
   }
   function trans2GeoBarChinaData(subData) {

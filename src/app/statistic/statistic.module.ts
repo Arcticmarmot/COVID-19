@@ -5,13 +5,16 @@ import {NgxEchartsModule} from 'ngx-echarts';
 import { RelatedNumComponent } from './related-num/related-num.component';
 import {MatDividerModule} from '@angular/material/divider';
 import { GeoScatterComponent } from './geo-scatter/geo-scatter.component';
+import { LineChartComponent } from './line-chart/line-chart.component';
+import { BarChartComponent } from './bar-chart/bar-chart.component';
 
 @NgModule({
-  declarations: [GeoBarComponent, RelatedNumComponent, GeoScatterComponent],
+  declarations: [GeoBarComponent, RelatedNumComponent, GeoScatterComponent, LineChartComponent, BarChartComponent],
   exports: [
     GeoBarComponent,
     RelatedNumComponent,
-    GeoScatterComponent
+    GeoScatterComponent,
+    LineChartComponent
   ],
   imports: [
     CommonModule,

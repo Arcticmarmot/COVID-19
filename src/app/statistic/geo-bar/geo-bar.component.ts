@@ -19,7 +19,7 @@ export class GeoBarComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.switch || this.data) {
+    if (this.data && (changes.switch || changes.data)) {
       this.options = generateGeoBarConfig(this.switch, this.data);
     }
   }
