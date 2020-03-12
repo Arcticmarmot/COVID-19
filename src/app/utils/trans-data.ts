@@ -31,7 +31,7 @@ export function trans2BarChartData(switchArea, data) {
   } else if (switchArea === 'china') {
     data.areaTree[0].children.forEach(province => {
       result.xAxis.push(province.name);
-      result.yAxisNowComfirm.push(province.total.confirm - province.total.heal);
+      result.yAxisNowComfirm.push(province.total.confirm - province.total.heal - province.total.dead);
       result.yAxisHeal.push(province.total.heal);
       result.yAxisDead.push(province.total.dead);
     });
