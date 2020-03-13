@@ -1,6 +1,5 @@
 import {WORLD, CHINA} from './coordinate';
 import {COUNTRY_NAME} from './translate';
-import {count} from 'rxjs/operators';
 const transChinese = {
   confirm: '累计确诊',
   heal: '治愈',
@@ -36,7 +35,6 @@ export function trans2BarChartData(switchArea, data) {
       result.yAxisDead.push(province.total.dead);
     });
   }
-  console.log(result, 'eee');
   return result;
 }
 export function trans2LineChartData(switchArea, data) {
@@ -52,7 +50,6 @@ export function trans2LineChartData(switchArea, data) {
       result.yAxis.push(day.country);
     });
   }
-  console.log(result);
   return result;
 }
 export function trans2RelatedNumData(switchArea, data) {
@@ -113,9 +110,7 @@ export function trans2GeoScatterData(switchMap, data) {
         } else {
           geoScatterData.push({name: COUNTRY_NAME[country.name], value: country.confirm});
         }
-      } else {
-        console.log(country.name);
-      }
+      } 
     });
     geoScatterData.push({name: 'China', value: subData.chinaTotal.confirm})
     return geoScatterData;
