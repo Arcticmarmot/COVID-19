@@ -1,4 +1,5 @@
 import { graphic } from 'echarts/lib/echarts';
+import {SIMPLE_WORLD} from './translate';
 export function generateBarChartConfig(queryData) {
   return {
     title: {
@@ -183,11 +184,11 @@ export function generateGeoBarConfig(switchMap, queryData) {
         offset: 1, color: '#cdcfd5'
       }], false),
       viewControl: {
-        distance: 50,
+        distance: 70,
         panMouseButton: 'left',
         rotateMouseButton: 'right',
         maxDistance: 100,
-        panSensitivity: 1
+        panSensitivity: 1.5
       },
       groundPlane: {
         show: true,
@@ -213,8 +214,7 @@ export function generateGeoBarConfig(switchMap, queryData) {
       temporalSuperSampling: {
         enable: true
       },
-      itemStyle: {
-      },
+
       regionHeight: 1
     },
     visualMap: {
@@ -242,7 +242,8 @@ export function generateGeoBarConfig(switchMap, queryData) {
       animation: true,
       itemStyle: {
         color: 'orange',
-        opacity: 0.8
+        opacity: 0.8,
+
       }
     }]
   };
@@ -284,26 +285,135 @@ export function generateGeoScatterConfig(switchMap, queryData) {
         saveAsImage: {}
       }
     },
+    legend: {
+      left: true,
+      bottom: true,
+      orient: 'vertical',
+      data: ['现存确诊', '累计确诊', '治愈', '死亡'],
+      selectedMode: 'single',
+      selected: {
+        '现存确诊': true,
+        '累计确诊': false,
+        '治愈': false,
+        '死亡': false
+      }
+    },
     series: [
       {
-        name: 'Cases #',
+        name: '现存确诊',
         type: 'map',
         roam: true,
         map: switchMap,
         label: {
-          show: switchMap === 'china'
+          show: true,
+          fontFamily: 'Microsoft YaHei',
         },
+        nameMap: SIMPLE_WORLD,
+        itemStyle: {
+          areaColor: '#eee',
+          borderWidth: 2,
+          borderType: 'solid'
+        },
+        zoom: 1.2,
+        selectedMode: 'multiple',
         emphasis: {
           label: {
-            show: true
+            show: true,
+            fontWeight: 'bold',
           }
         },
         // 文本位置修正
         textFixed: {
           Alaska: [20, -20]
         },
-        data: queryData
-      }
+        data: queryData['nowConfirm']
+      },
+      {
+        name: '累计确诊',
+        type: 'map',
+        roam: true,
+        map: switchMap,
+        label: {
+          show: true,
+          fontFamily: 'Microsoft YaHei',
+        },
+        nameMap: SIMPLE_WORLD,
+        itemStyle: {
+          areaColor: '#eee',
+          borderWidth: 2,
+          borderType: 'solid'
+        },
+        zoom: 1.2,
+        emphasis: {
+          label: {
+            show: true,
+            fontWeight: 'bold',
+          }
+        },
+        // 文本位置修正
+        textFixed: {
+          Alaska: [20, -20]
+        },
+        data: queryData['confirm']
+      },
+      {
+        name: '治愈',
+        type: 'map',
+        roam: true,
+        map: switchMap,
+        label: {
+          show: true,
+          fontFamily: 'Microsoft YaHei',
+        },
+        itemStyle: {
+          areaColor: '#eee',
+          borderWidth: 2,
+          borderType: 'solid'
+        },
+        nameMap: SIMPLE_WORLD,
+        zoom: 1.2,
+        selectedMode: 'multiple',
+        emphasis: {
+          label: {
+            show: true,
+            fontWeight: 'bold',
+          }
+        },
+        // 文本位置修正
+        textFixed: {
+          Alaska: [20, -20]
+        },
+        data: queryData['heal']
+      },
+      {
+        name: '死亡',
+        type: 'map',
+        roam: true,
+        map: switchMap,
+        label: {
+          show: true,
+          fontFamily: 'Microsoft YaHei',
+        },
+        itemStyle: {
+          areaColor: '#eee',
+          borderWidth: 2,
+          borderType: 'solid'
+        },
+        nameMap: SIMPLE_WORLD,
+        zoom: 1.2,
+        selectedMode: 'multiple',
+        emphasis: {
+          label: {
+            show: true,
+            fontWeight: 'bold',
+          }
+        },
+        // 文本位置修正
+        textFixed: {
+          Alaska: [20, -20]
+        },
+        data: queryData['dead']
+      },
     ]
   };
 }

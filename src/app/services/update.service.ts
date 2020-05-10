@@ -15,8 +15,8 @@ export class UpdateService {
   }
   update(): Observable<any> {
     return this.update_h5().pipe(
-      concat(this.update_foreign().pipe(
-        concat(this.update_other())
+      concat(this.update_other().pipe(
+        concat(this.update_foreign())
       ))
     );
   }

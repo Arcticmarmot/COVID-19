@@ -1,5 +1,5 @@
 import {WORLD, CHINA} from './coordinate';
-import {COUNTRY_NAME} from './translate';
+import {COUNTRY_NAME, SIMPLE_WORLD} from './translate';
 import {getDate} from './utils';
 const transChinese = {
   confirm: '累计确诊',
@@ -101,27 +101,53 @@ export function trans2RelatedNumData(switchArea, data) {
 }
 export function trans2GeoScatterData(switchMap, data) {
   function trans2GeoScatterChinaData(subData: any) {
-    const geoScatterData = [];
+    const geoScatterData = {
+      nowConfirm: [],
+      confirm: [],
+      heal: [],
+      dead: []
+    };
     subData.areaTree[0].children.forEach(province => {
-      geoScatterData.push({name: province.name, value: province.total.confirm});
+      geoScatterData['nowConfirm'].push({name: province.name, value: province.total.nowConfirm});
+      geoScatterData['confirm'].push({name: province.name, value: province.total.confirm});
+      geoScatterData['heal'].push({name: province.name, value: province.total.heal});
+      geoScatterData['dead'].push({name: province.name, value: province.total.dead});
     });
     return geoScatterData;
   }
 
   function trans2GeoScatterWorldData(subData: any) {
-    const geoScatterData = [];
-    let jp = 0;
+    const geoScatterData = {
+      nowConfirm: [],
+      confirm: [],
+      heal: [],
+      dead: []
+    };
     subData.foreignList.forEach(country => {
-      if (COUNTRY_NAME[country.name]) {
-        if (COUNTRY_NAME[country.name] === 'Japen') {
+      const countryName = SIMPLE_WORLD[COUNTRY_NAME[country.name]]
+      if (countryName) {
+        /*if (COUNTRY_NAME[country.name] === 'Japen') {
           jp += country.confirm;
-          geoScatterData.push({name: COUNTRY_NAME[country.name], value: jp});
+          geoScatterData['nowConfirm'].push({name: COUNTRY_NAME[country.name], value: jp});
+          geoScatterData['confirm'].push({name: COUNTRY_NAME[country.name], value: jp});
+          geoScatterData['heal'].push({name: COUNTRY_NAME[country.name], value: jp});
+          geoScatterData['dead'].push({name: COUNTRY_NAME[country.name], value: jp});
         } else {
-          geoScatterData.push({name: COUNTRY_NAME[country.name], value: country.confirm});
-        }
+          geoScatterData['nowConfirm'].push({name: COUNTRY_NAME[country.name], value: country.nowConfirm});
+          geoScatterData['confirm'].push({name: COUNTRY_NAME[country.name], value: country.confirm});
+          geoScatterData['heal'].push({name: COUNTRY_NAME[country.name], value: country.heal});
+          geoScatterData['dead'].push({name: COUNTRY_NAME[country.name], value: country.dead});
+        }*/
+        geoScatterData['nowConfirm'].push({name: countryName, value: country.nowConfirm});
+        geoScatterData['confirm'].push({name: countryName, value: country.confirm});
+        geoScatterData['heal'].push({name: countryName, value: country.heal});
+        geoScatterData['dead'].push({name: countryName, value: country.dead});
       }
     });
-    geoScatterData.push({name: 'China', value: subData.chinaTotal.confirm})
+    geoScatterData['nowConfirm'].push({name: 'CN', value: subData.chinaTotal.nowConfirm});
+    geoScatterData['confirm'].push({name: 'CN', value: subData.chinaTotal.confirm});
+    geoScatterData['heal'].push({name: 'CN', value: subData.chinaTotal.heal});
+    geoScatterData['dead'].push({name: 'CN', value: subData.chinaTotal.dead});
     return geoScatterData;
   }
 
@@ -137,10 +163,10 @@ export function trans2GeoBarData(switchMap, data) {
     const geoBarData = [];
     subData.foreignList.forEach(area => {
       if (WORLD[area.name] ) {
-        geoBarData.push([WORLD[area.name][0], WORLD[area.name][1], Math.log(area.confirm + 5)]);
+        geoBarData.push([WORLD[area.name][0], WORLD[area.name][1], Math.log(area.confirm + 1)]);
       }
     });
-    geoBarData.push([WORLD['中国'][0], WORLD['中国'][1], Math.log(subData.chinaTotal.confirm + 5)])
+    geoBarData.push([WORLD['中国'][0], WORLD['中国'][1], Math.log(subData.chinaTotal.confirm + 1)])
     return geoBarData;
   }
   function trans2GeoBarChinaData(subData) {

@@ -12,10 +12,10 @@ import {concatObject} from './utils/utils';
 })
   export class AppComponent {
   geoSwitch = '2d';
-  switch = 'world';
-  geoBarSwitch = 'world';
+  switch = 'china';
+  geoBarSwitch = 'china';
   geoBarData;
-  geoScatterSwitch = 'world';
+  geoScatterSwitch = 'china';
   geoScatterData;
   lineChartData;
   barChartData;
