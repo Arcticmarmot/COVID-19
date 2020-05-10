@@ -1,5 +1,6 @@
 import {WORLD, CHINA} from './coordinate';
 import {COUNTRY_NAME} from './translate';
+import {getDate} from './utils';
 const transChinese = {
   confirm: '累计确诊',
   heal: '治愈',
@@ -7,7 +8,8 @@ const transChinese = {
   nowConfirm: '现存确诊',
   suspect: '现存疑似',
   nowSevere: '现存重症',
-  importedCase: '境外流入'
+  importedCase: '境外流入',
+  noInfect: '无症状感染者'
 };
 const transColor = {
   confirm: 'deepskyblue',
@@ -16,7 +18,8 @@ const transColor = {
   nowConfirm: 'red',
   suspect: 'lightcoral',
   nowSevere: 'crimson',
-  importedCase: 'cornflowerblue'
+  importedCase: 'cornflowerblue',
+  noInfect: 'crimson'
 };
 export function trans2BarChartData(switchArea, data) {
   const result = {xAxis: [], yAxisNowComfirm: [], yAxisHeal: [], yAxisDead: []};
@@ -38,16 +41,22 @@ export function trans2BarChartData(switchArea, data) {
   return result;
 }
 export function trans2LineChartData(switchArea, data) {
+  const today = getDate();
+  console.log(today)
   const result = {xAxis: [], yAxis: []};
   if (switchArea === 'world') {
     data.globalDailyHistory.forEach(day => {
-      result.xAxis.push(day.date);
-      result.yAxis.push(day.all.newAddConfirm);
+      if (day.date !== today) {
+        result.xAxis.push(day.date);
+        result.yAxis.push(day.all.newAddConfirm);
+      }
     });
   } else if (switchArea === 'china') {
     data.dailyNewAddHistory.forEach(day => {
-      result.xAxis.push(day.date);
-      result.yAxis.push(day.country);
+      if (day.date !== today) {
+        result.xAxis.push(day.date);
+        result.yAxis.push(day.country);
+      }
     });
   }
   return result;
@@ -110,7 +119,7 @@ export function trans2GeoScatterData(switchMap, data) {
         } else {
           geoScatterData.push({name: COUNTRY_NAME[country.name], value: country.confirm});
         }
-      } 
+      }
     });
     geoScatterData.push({name: 'China', value: subData.chinaTotal.confirm})
     return geoScatterData;

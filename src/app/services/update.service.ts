@@ -5,7 +5,7 @@ import {concat, map, mergeAll} from 'rxjs/operators';
 
 const API_H5 = 'g2/getOnsInfo?name=disease_h5';
 const API_OTHER = 'g2/getOnsInfo?name=disease_other';
-
+const API_FOREIGN = 'g2/getOnsInfo?name=disease_foreign';
 @Injectable({
   providedIn: 'root'
 })
@@ -15,7 +15,9 @@ export class UpdateService {
   }
   update(): Observable<any> {
     return this.update_h5().pipe(
-      concat(this.update_other())
+      concat(this.update_foreign().pipe(
+        concat(this.update_other())
+      ))
     );
   }
   update_h5(): Observable<any> {
@@ -23,6 +25,9 @@ export class UpdateService {
   }
   update_other(): Observable<any> {
     return this.http.get(API_OTHER);
+  }
+  update_foreign(): Observable<any> {
+    return this.http.get(API_FOREIGN);
   }
 
 }
