@@ -7,10 +7,12 @@ import {StatisticModule} from './statistic/statistic.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatButtonModule} from '@angular/material/button';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {PieChartComponent} from './statistic/pie-chart/pie-chart.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    PieChartComponent,
   ],
   imports: [
     StatisticModule,

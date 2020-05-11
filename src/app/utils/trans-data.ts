@@ -160,17 +160,33 @@ export function trans2GeoScatterData(switchMap, data) {
 }
 export function trans2GeoBarData(switchMap, data) {
   function trans2GeoBarWorldData(subData) {
-    const geoBarData = [];
+    const geoBarData = {
+      nowConfirm: [],
+      confirm: [],
+      heal: [],
+      dead: []
+    };
     subData.foreignList.forEach(area => {
       if (WORLD[area.name] ) {
-        geoBarData.push([WORLD[area.name][0], WORLD[area.name][1], Math.log(area.confirm + 1)]);
+        geoBarData['nowConfirm'].push([WORLD[area.name][0], WORLD[area.name][1], Math.log(area.nowConfirm + 1)]);
+        geoBarData['confirm'].push([WORLD[area.name][0], WORLD[area.name][1], Math.log(area.confirm + 1)]);
+        geoBarData['heal'].push([WORLD[area.name][0], WORLD[area.name][1], Math.log(area.heal + 1)]);
+        geoBarData['dead'].push([WORLD[area.name][0], WORLD[area.name][1], Math.log(area.dead + 1)]);
       }
     });
-    geoBarData.push([WORLD['中国'][0], WORLD['中国'][1], Math.log(subData.chinaTotal.confirm + 1)])
+    geoBarData['nowConfirm'].push([WORLD['中国'][0], WORLD['中国'][1], Math.log(subData.chinaTotal.nowConfirm + 1)]);
+    geoBarData['confirm'].push([WORLD['中国'][0], WORLD['中国'][1], Math.log(subData.chinaTotal.confirm + 1)]);
+    geoBarData['heal'].push([WORLD['中国'][0], WORLD['中国'][1], Math.log(subData.chinaTotal.heal + 1)]);
+    geoBarData['dead'].push([WORLD['中国'][0], WORLD['中国'][1], Math.log(subData.chinaTotal.dead + 1)]);
     return geoBarData;
   }
   function trans2GeoBarChinaData(subData) {
-    const geoBarData = [];
+    const geoBarData = {
+      nowConfirm: [],
+      confirm: [],
+      heal: [],
+      dead: []
+    };
     subData.areaTree[0].children.forEach(prov => {
       prov.children.forEach(area => {
         const name = area.name
@@ -178,7 +194,10 @@ export function trans2GeoBarData(switchMap, data) {
           .replace('区', '')
           .replace('市', '');
         if (CHINA[name]) {
-          geoBarData.push([CHINA[name][0], CHINA[name][1], Math.log(area.total.confirm + 5)]);
+          geoBarData['nowConfirm'].push([CHINA[name][0], CHINA[name][1], Math.log(area.total.nowConfirm + 5)]);
+          geoBarData['confirm'].push([CHINA[name][0], CHINA[name][1], Math.log(area.total.confirm + 5)]);
+          geoBarData['heal'].push([CHINA[name][0], CHINA[name][1], Math.log(area.total.heal + 5)]);
+          geoBarData['dead'].push([CHINA[name][0], CHINA[name][1], Math.log(area.total.dead + 5)]);
         }
       });
     });
@@ -190,5 +209,20 @@ export function trans2GeoBarData(switchMap, data) {
     case 'world':
       return trans2GeoBarWorldData(data);
   }
+}
+export function trans2PieChartData(switchArea, data) {
+  const result = {
+    situation: []
+  };
+  if (switchArea === 'china') {
+    result['situation'].push({value: data.chinaTotal['nowConfirm'], name: '现存确诊'});
+    result['situation'].push({value: data.chinaTotal['heal'], name: '治愈'});
+    result['situation'].push({value: data.chinaTotal['dead'], name: '死亡'});
+  } else if (switchArea === 'world') {
+    result['situation'].push({value: data.globalStatis['nowConfirm'], name: '现存确诊'});
+    result['situation'].push({value: data.globalStatis['heal'], name: '治愈'});
+    result['situation'].push({value: data.globalStatis['dead'], name: '死亡'});
+  }
+  return result;
 }
 

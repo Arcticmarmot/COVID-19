@@ -1,6 +1,6 @@
 #app{
   display: flex;
-  height: 1000px;
+  height: 1100px;
   flex-direction: column;
   .header{
     background-color: #242A3F;
@@ -10,7 +10,8 @@
     align-items: center;
     justify-content: center;
     .title{
-      font-size: 30px;
+      letter-spacing: 3px;
+      font-size: 28px;
     }
   }
   .content{
@@ -56,19 +57,25 @@
       }
     }
     .right{
-      width: 45%;
+      width: 42%;
       height: 100%;
       display: flex;
       flex-direction: column;
       #line-chart{
         width: 100%;
-        height: 40%;
-        padding: 20px;
+        height: 32%;
+        padding: 15px;
       }
       #bar-chart{
         width: 100%;
-        height: 60%;
-        padding: 20px;
+        height: 38%;
+        padding: 15px;
+      }
+      #pie-chart{
+        width: 100%;
+        height: 30%;
+        padding: 15px;
+        padding-left: 40px;
       }
     }
   }

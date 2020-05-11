@@ -231,21 +231,77 @@ export function generateGeoBarConfig(switchMap, queryData) {
         colorAlpha: 0
       }
     },
-    series: [{
-      type: 'bar3D',
-      coordinateSystem: 'geo3D',
-      shading: 'lambert',
-      data: queryData,
-      barSize: 0.3,
-      minHeight: 0.5,
-      silent: true,
-      animation: true,
-      itemStyle: {
-        color: 'orange',
-        opacity: 0.8,
-
+    legend: {
+      right: true,
+      bottom: true,
+      orient: 'vertical',
+      data: ['现存确诊', '累计确诊', '治愈', '死亡'],
+      selectedMode: 'single',
+      selected: {
+        '现存确诊': true,
+        '累计确诊': false,
+        '治愈': false,
+        '死亡': false
       }
-    }]
+    },
+    series: [
+      {
+        name: '现存确诊',
+        type: 'bar3D',
+        coordinateSystem: 'geo3D',
+        shading: 'lambert',
+        data: queryData['nowConfirm'],
+        barSize: 0.3,
+        minHeight: 0.5,
+        silent: true,
+        animation: true,
+        itemStyle: {
+          opacity: 0.8,
+        }
+      },
+      {
+        name: '累计确诊',
+        type: 'bar3D',
+        coordinateSystem: 'geo3D',
+        shading: 'lambert',
+        data: queryData['confirm'],
+        barSize: 0.3,
+        minHeight: 0.5,
+        silent: true,
+        animation: true,
+        itemStyle: {
+          opacity: 0.8,
+        },
+      },
+      {
+        name: '治愈',
+        type: 'bar3D',
+        coordinateSystem: 'geo3D',
+        shading: 'lambert',
+        data: queryData['heal'],
+        barSize: 0.3,
+        minHeight: 0.5,
+        silent: true,
+        animation: true,
+        itemStyle: {
+          opacity: 0.8,
+        }
+      },
+      {
+        name: '死亡',
+        type: 'bar3D',
+        coordinateSystem: 'geo3D',
+        shading: 'lambert',
+        data: queryData['dead'],
+        barSize: 0.3,
+        minHeight: 0.5,
+        silent: true,
+        animation: true,
+        itemStyle: {
+          opacity: 0.8,
+        }
+      }
+    ]
   };
 }
 export function generateGeoScatterConfig(switchMap, queryData) {
@@ -414,6 +470,49 @@ export function generateGeoScatterConfig(switchMap, queryData) {
         },
         data: queryData['dead']
       },
+    ]
+  };
+}
+
+export function generatePieChartConfig(queryData) {
+  return {
+    title: {
+      text: "The Radio of Patients' type",
+      right: true,
+      top: true,
+    },
+    tooltip: {
+      trigger: 'item',
+      formatter: '{a} <br/>{b}: {c} ({d}%)'
+    },
+    legend: {
+      orient: 'vertical',
+      left: 10,
+      data: ['现存确诊', '治愈', '死亡'],
+    },
+
+    series: [
+      {
+        name: '病患占比',
+        type: 'pie',
+        radius: ['50%', '70%'],
+        avoidLabelOverlap: false,
+        label: {
+          show: false,
+          position: 'center'
+        },
+        emphasis: {
+          label: {
+            show: true,
+            fontSize: '20',
+            fontWeight: 'bold'
+          }
+        },
+        labelLine: {
+          show: false
+        },
+        data: queryData['situation']
+      }
     ]
   };
 }
