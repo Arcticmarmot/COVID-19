@@ -473,7 +473,6 @@ export function generateGeoScatterConfig(switchMap, queryData) {
     ]
   };
 }
-
 export function generatePieChartConfig(queryData) {
   return {
     title: {

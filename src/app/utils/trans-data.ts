@@ -42,18 +42,17 @@ export function trans2BarChartData(switchArea, data) {
 }
 export function trans2LineChartData(switchArea, data) {
   const today = getDate();
-  console.log(today)
   const result = {xAxis: [], yAxis: []};
   if (switchArea === 'world') {
     data.globalDailyHistory.forEach(day => {
-      if (day.date !== today) {
+      if (day.date !== today && day.date !== '05.15') {
         result.xAxis.push(day.date);
         result.yAxis.push(day.all.newAddConfirm);
       }
     });
   } else if (switchArea === 'china') {
     data.dailyNewAddHistory.forEach(day => {
-      if (day.date !== today) {
+      if (day.date !== today && day.date !== '05.15') {
         result.xAxis.push(day.date);
         result.yAxis.push(day.country);
       }
