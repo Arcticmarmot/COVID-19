@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --watch --prod",
+    "build": "ng build --watch --prod=false",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
