@@ -3,7 +3,7 @@ import {SIMPLE_WORLD} from './translate';
 export function generateBarChartConfig(queryData) {
   return {
     title: {
-      text: 'Rank by Patients',
+      text: '病患数排名',
       left: 10
     },
     toolbox: {
@@ -60,21 +60,21 @@ export function generateBarChartConfig(queryData) {
     },
     series: [
       {
-        name: 'Current confirmed',
+        name: '现存确诊',
         type: 'bar',
         data: queryData.yAxisNowComfirm,
         stack: 'one',
         color: 'lightcoral'
       },
       {
-        name: 'Death',
+        name: '死亡',
         type: 'bar',
         data: queryData.yAxisDead,
         stack: 'one',
         color: 'crimson'
       },
       {
-        name: 'Heal',
+        name: '治愈',
         type: 'bar',
         data: queryData.yAxisHeal,
         stack: 'one',
@@ -90,7 +90,7 @@ export function generateLineChartConfig(queryData) {
     },
     title: {
       left: 'center',
-      text: 'Trend of Daily Increased Cases',
+      text: '每日疫情趋势',
     },
     toolbox: {
       feature: {
@@ -476,7 +476,7 @@ export function generateGeoScatterConfig(switchMap, queryData) {
 export function generatePieChartConfig(queryData) {
   return {
     title: {
-      text: "The Radio of Patients' type",
+      text: "病患占比",
       right: true,
       top: true,
     },
